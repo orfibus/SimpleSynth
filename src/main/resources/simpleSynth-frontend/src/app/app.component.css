@@ -9,6 +9,10 @@
   display: flex;
 }
 
+.flex-app {
+  flex-direction: column;
+}
+
 #header{
   width: 100%;
   height: 10%;

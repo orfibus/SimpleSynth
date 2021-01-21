@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { AudioMapNodeControl, AudioNodeMode, AudioMapNodeOptions } from '../interfaces/audio-map-node-control.interface';
 import { KeyboardOptions } from '../interfaces/keyboard-options.interface';
 import { KeyboardNode } from '../models/keyboard-node';
 import { Keyboard } from '../models/keyboard.model';
+import {faPlay} from '@fortawesome/free-solid-svg-icons';
+import {faPause} from '@fortawesome/free-solid-svg-icons';
+import {timeout} from "rxjs/operators";
 
 @Component({
   selector: 'app-midi-keyboard',
@@ -21,7 +23,10 @@ export class MidiKeyboardComponent implements OnInit, AudioMapNodeControl {
 
   ctx: BaseAudioContext;
   kbdNode: KeyboardNode;
+  playContinuously: boolean;
 
+  faPlay = faPlay;
+  faPause = faPause;
 
   constructor() {
 
@@ -38,6 +43,7 @@ export class MidiKeyboardComponent implements OnInit, AudioMapNodeControl {
        options?: KeyboardOptions): void | AudioNode {
     this.id = id;
     this.mode = mode;
+    this.playContinuously = false;
     this.keyboard = new Keyboard(1 , 'sine');
     this.ctx = new (AudioContext || BaseAudioContext)();
     if (options) {
@@ -70,23 +76,31 @@ export class MidiKeyboardComponent implements OnInit, AudioMapNodeControl {
 
   }
 
-  onKeyPressed(e: Event, key: [string, number]): void {
+  doPlayContinuously(key: [string, number]): void{
+    this.kbdNode.stopPlaying();
+    this.kbdNode.playNoteContinuous(key[0]);
+  }
 
+  onKeyPressed(e: Event, key: [string, number]): void {
     // tslint:disable-next-line: no-bitwise
     if ((e as MouseEvent).buttons & 1 ) {
+      if (this.playContinuously){
+        this.doPlayContinuously(key);
+      }
+      else {
+        switch (this.mode) {
+          case 'broadcast':
 
-      switch (this.mode) {
-        case 'broadcast':
-
-          break;
+            break;
           case 'self-contained':
-          this.kbdNode.playNote(key[0]);
-          break;
-        case 'settings-only':
+            this.kbdNode.playNote(key[0]);
+            break;
+          case 'settings-only':
 
-          break;
-        default:
-          break;
+            break;
+          default:
+            break;
+        }
       }
     }
   }
@@ -115,5 +129,13 @@ export class MidiKeyboardComponent implements OnInit, AudioMapNodeControl {
 
   onWaveformChange(event: any): void {
     this.kbdNode.changeWaveform(event.value);
+  }
+
+  onPlayContinuouslyTrue(): void{
+      this.playContinuously = false;
+  }
+  onPlayContinuouslyFalse(): void{
+    this.playContinuously = true;
+    this.kbdNode.stopPlaying();
   }
 }

@@ -12,11 +12,16 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatDividerModule} from '@angular/material/divider';
+import { FilterListComponent } from './filter-list/filter-list.component';
+import {FormsModule} from '@angular/forms';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
     AppComponent,
     MidiKeyboardComponent,
+    FilterListComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +33,10 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     MatSliderModule,
     MatCardModule,
     MatButtonToggleModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatDividerModule,
+    FormsModule,
+    FontAwesomeModule
 
   ],
   providers: [],

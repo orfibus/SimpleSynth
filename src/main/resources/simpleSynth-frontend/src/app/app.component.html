@@ -1,28 +1,23 @@
 <header>
-  <mat-toolbar id="header" class="align-flex-end">
-    <mat-toolbar-row [ngClass]="title" class="text">SimpleSynth App</mat-toolbar-row>
+  <mat-toolbar id="header" class="align-flex-end mat-background-accent">
+    <mat-toolbar-row class="text"><span class="mat-title">SimpleSynth App</span></mat-toolbar-row>
   </mat-toolbar>
 </header>
-<main id="main">
+<body class="flex flex-app mat-background-primary mat-app-background">
 
-  <div id="filterFlow" class="">
+  <main id="main">
 
-  </div>
+    <div id="filterFlow" class="">
 
-  <mat-grid-list id="filterList" cols="2" rowHeight="16:9" gutterSize="20">
-<!--    <mat-grid-tile></mat-grid-tile>-->
-<!--    <mat-grid-tile></mat-grid-tile>-->
-<!--    <mat-grid-tile></mat-grid-tile>-->
-<!--    <mat-grid-tile></mat-grid-tile>-->
-  </mat-grid-list>
+    </div>
 
-  <app-midi-keyboard></app-midi-keyboard>
-</main>
-<footer id="footer" class="">
-  <div>
+<!--    <app-filter-list></app-filter-list>-->
+
+    <app-midi-keyboard></app-midi-keyboard>
+
+  </main>
+
+  <footer id="footer" class="">
     <p>Created By G.Karetas, O.Bousoulas</p>
-  </div>
-</footer>
-
-
-
+  </footer>
+</body>

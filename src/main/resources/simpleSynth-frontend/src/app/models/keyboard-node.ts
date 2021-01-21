@@ -54,6 +54,13 @@ export class KeyboardNode {
         }
     }
 
+    playNoteContinuous(note: string): void { // TODO make this play files continuously
+      if (this.currentlyPlaying !== note) {
+        this.oscList.get(note).connect(this.gainNode);
+        this.currentlyPlaying = note;
+      }
+    }
+
     stopPlaying(): void {
         this.oscList.get(this.currentlyPlaying).disconnect();
         this.currentlyPlaying = '';
